@@ -17,3 +17,13 @@ Supprimer node_modules, supprimer package-json.lock, décrémenter la version re
 
 #Erreur compilation web-vitals manquant	
 npm i web-vitals --save-dev
+
+#MongoDB Rust configuration
+https://www.mongodb.com/developer/languages/rust/rust-mongodb-crud-tutorial/
+
+#MongoDB Cluster
+https://cloud.mongodb.com/v2/677c07caa60ba83a335dd142#/overview?automateSecurity=true&connectCluster=RustQuickstart
+
+Database user
+username: oswaldojimenezhidalgo
+password: flO9qhklhlTd7u8B
