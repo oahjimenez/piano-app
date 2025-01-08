@@ -5,6 +5,9 @@
 #Creation projet
 https://code.visualstudio.com/docs/languages/rust
 
+#Rust analyser -> autodiscovery works at most 1 subfolder deep, auto discovery will fail otherwise
+https://users.rust-lang.org/t/in-vscode-rust-analyzer-features-such-as-code-completion-doesnt-work-in-certain-conditions/107685/5
+
 
 ##########################################
 # -------------- React --------------------

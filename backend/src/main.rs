@@ -1,3 +1,5 @@
+use bson::doc;
+use chrono::{TimeZone, Utc};
 use mongodb::{Client, options::{ClientOptions, ResolverConfig}};
 use std::env;
 use std::error::Error;
@@ -21,5 +23,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
    for name in client.list_database_names(None, None).await? {
       println!("- {}", name);
    }
+
+   // Get the 'movies' collection from the 'sample_mflix' database:
+   let movies = client.database("sample_mflix").collection("movies");
+
+   let new_doc = doc! {
+      "title": "Yaya's",
+      "year": 2025,
+      "plot": "A sassy yaya.",
+      "released": Utc.ymd(2020, 2, 7).and_hms_opt(0, 0, 0),
+   };
+
+   let insert_result = movies.insert_one(new_doc.clone(), None).await?;
+   println!("New document ID: {}", insert_result.inserted_id);
+
    Ok(())
 }
