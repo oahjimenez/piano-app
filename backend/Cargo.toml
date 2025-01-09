@@ -10,3 +10,5 @@ tokio = "1"
 chrono = "0.4" # Used for setting DateTimes
 serde = "1" # Used in the Map Data into Structs section
 dotenv = "0.15.0"
+actix = "0.13.5"
+actix-web = "4.9.0"
