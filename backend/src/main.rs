@@ -1,4 +1,5 @@
 use actix::Response;
+use actix_cors::{Cors, CorsError};
 use actix_web::{error::{HttpError, JsonPayloadError}, get, middleware, web::{self, get}, App, HttpServer, Responder, Result};
 use bson::{doc, oid::ObjectId, Bson, Document};
 use chrono::{TimeZone, Utc};
@@ -91,7 +92,19 @@ async fn get_movie() -> Result<Movie,Error> {
 pub async fn main() -> std::io::Result<()> {
    use actix_web::{App, HttpServer};
 
-   HttpServer::new(|| App::new().service(movie_list))
+   HttpServer::new(|| { 
+      let cors = Cors::default()
+      .allowed_origin("http://localhost")
+      .allowed_origin("http://localhost:8080")
+      .allowed_origin("http://localhost:3000")
+      .allowed_methods(vec!["GET", "POST"])
+      .max_age(36000);
+
+      App::new()
+      .wrap(cors)
+      .service(movie_list) 
+   
+   })
        .bind(("127.0.0.1", 8080))?
        .run()
        .await

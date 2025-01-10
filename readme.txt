@@ -30,3 +30,7 @@ https://cloud.mongodb.com/v2/677c07caa60ba83a335dd142#/overview?automateSecurity
 Database user
 username: oswaldojimenezhidalgo
 password: flO9qhklhlTd7u8B
+
+#Proxy cors error
+https://dev.to/codeofrelevancy/how-to-set-up-a-proxy-server-in-react-dealing-with-cors-87e
+Solution (pas valide pour un environnement non productif: ajouter actix-cors -> autoriser le host qui appelle coté backend rust)
