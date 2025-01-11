@@ -3,12 +3,25 @@ use actix_cors::{Cors, CorsError};
 use actix_web::{error::{HttpError, JsonPayloadError}, get, middleware, web::{self, get}, App, HttpServer, Responder, Result};
 use bson::{doc, oid::ObjectId, Bson, Document};
 use chrono::{TimeZone, Utc};
+use futures::{StreamExt, TryStreamExt};
 use mongodb::{error::Error, options::{ClientOptions, ResolverConfig}, Client};
 use serde::{Deserialize, Serialize};
 use std::{env, ptr::null};
 use tokio;
 use std::fmt;
 use dotenv::dotenv;
+
+#[derive(Serialize, Deserialize, Debug)]
+struct PianoSheet {
+
+   #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
+   id: Option<ObjectId>,
+   chord_type : String,
+   exemple: String,
+   formula: String,
+   sound_quality : String
+}
+
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Movie {
@@ -41,6 +54,38 @@ impl fmt::Display for Movie {
 pub async fn movie_list() -> Result<impl Responder, HttpError> {
    let movie = get_movie().await .expect("Could not get yaya movie");
    Ok(web::Json(movie))
+}
+
+
+#[get("/piano-sheets")]
+pub async fn piano_sheet_list() -> Result<impl Responder, HttpError> {
+   let piano_sheets = get_piano_sheets().await .expect("Could not get piano");
+   Ok(web::Json(piano_sheets))
+}
+
+
+async fn get_piano_sheets() -> Result<Vec<PianoSheet>,Error> {
+   dotenv().ok(); // This line loads the environment variables from the ".env" file.
+   println!("fetching piano sheets");
+
+   // Load the MongoDB connection string from an environment variable:
+   let client_uri =
+      env::var("MONGODB_URI").expect("You must set the MONGODB_URI environment var!");
+   // A Client is needed to connect to MongoDB:
+   // An extra line of code to work around a DNS issue on Windows:
+   let options =
+      ClientOptions::parse_with_resolver_config(&client_uri, ResolverConfig::cloudflare())
+         .await?;
+   let client = Client::with_options(options)?;
+
+
+   // Get the 'movies' collection from the 'sample_mflix' database:
+   let piano_sheets_collection = client.database("piano").collection::<PianoSheet>("sheets");
+
+   let cursor = piano_sheets_collection.find(None,None).await.expect("Error fetching piano sheets");
+   let piano_sheets = cursor.try_collect().await.unwrap_or_else(|_| vec![]);
+
+   return Ok(piano_sheets)
 }
 
 async fn get_movie() -> Result<Movie,Error> {
@@ -103,6 +148,7 @@ pub async fn main() -> std::io::Result<()> {
       App::new()
       .wrap(cors)
       .service(movie_list) 
+      .service(piano_sheet_list) 
    
    })
        .bind(("127.0.0.1", 8080))?

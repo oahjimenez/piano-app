@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import MovieComponent from './components/MovieComponent/MovieComponent';
+import PianoSheetComponent from './components/PianoSheetComponent/PianoSheetComponent';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           Learn React
         </a>
         <MovieComponent></MovieComponent>
+        <PianoSheetComponent></PianoSheetComponent>
       </header>
     </div>
   );
