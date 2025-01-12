@@ -34,3 +34,8 @@ password: flO9qhklhlTd7u8B
 #Proxy cors error
 https://dev.to/codeofrelevancy/how-to-set-up-a-proxy-server-in-react-dealing-with-cors-87e
 Solution (pas valide pour un environnement non productif: ajouter actix-cors -> autoriser le host qui appelle coté backend rust)
+
+#react scss integration - craco
+https://stackoverflow.com/questions/67777943/how-to-setup-webpack-using-create-react-app-for-sass-resources-loader
+https://stackoverflow.com/questions/66820999/react-cannot-start-project-craco-is-not-recognized-as-an-internal-or-externa
+npm install sass-loader sass webpack --save-dev

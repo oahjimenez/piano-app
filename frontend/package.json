@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.4",
@@ -15,8 +16,8 @@
     "typescript": "^5.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -40,7 +41,11 @@
   },
   "devDependencies": {
     "ajv": "^7.2.4",
-    "web-vitals": "^4.2.4"
+    "craco-sass-resources-loader": "^1.1.0",
+    "sass": "^1.83.1",
+    "sass-loader": "^16.0.4",
+    "web-vitals": "^4.2.4",
+    "webpack": "^5.97.1"
   },
   "overrides": {
     "typescript": "^5.0.3"
